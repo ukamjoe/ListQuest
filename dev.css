@@ -10,9 +10,36 @@ body{
     display: flex;
 }
 
+#toggle-navbar{
+    font-size: 21px;
+    color: #333;
+    cursor: pointer;
+    position: fixed;
+    top: 10px;
+    z-index: 1000;
+    background:#9467BD;
+    padding: 10px;
+}
+
+#toggle-navbar:hover {
+    background: #9467BD;
+    color: black;
+}
+
+.navbar-open #toggle-navbar {
+    background: white; /* Optional: Change the icon background color when the navbar is open */
+}
+
 .navbar{
     width: 300px;
     height: 100vh;
+    display: none;
+}
+
+/* Styles for when the navbar is open */
+.navbar-open .navbar {
+    display: block;
+    background-color: white; /* Change the background color to white */
 }
 
 .profile{
@@ -95,7 +122,7 @@ ul li a{
 
 .main{
     width:100%;
-    height: auto;
+    height: 100vh;
     background-color: #9467BD;
 }
 
@@ -104,7 +131,7 @@ ul li a{
     height: 70px;
     display: flex;
     margin-top: 10px;
-    margin-left: 10px;
+    margin-left: 60px;
     justify-content: justify;
 }
 

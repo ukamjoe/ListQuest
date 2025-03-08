@@ -1,9 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('toggle-navbar');
+    const navbar = document.getElementById('navbar');
     const taskInput = document.getElementById('task');
     const createButton = document.getElementById('create');
     const timeButton = document.getElementById('time');
     const taskTimeInput = document.getElementById('task-time');
     const tasksContainer = document.getElementById('tasks');
+
+    // Initially hide the navbar
+    navbar.style.display = 'none';
+
+    // Add event listener to toggle button
+    toggleButton.addEventListener('click', () => {
+        if (navbar.style.display === 'none') {
+            navbar.style.display = 'block';
+            toggleButton.classList.remove('fa-bars');
+            toggleButton.classList.add('fa-times');
+        } else {
+            navbar.style.display = 'none';
+            toggleButton.classList.remove('fa-times');
+            toggleButton.classList.add('fa-bars');
+        }
+        document.body.classList.toggle('navbar-open');
+    });
 
     // Function to save tasks to localStorage
     const saveTasks = () => {
