@@ -33,7 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const taskTime = taskContent.querySelector('.task-time').innerText;
             tasks.push({ task: taskText, time: taskTime });
         });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
+        try {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        } catch (error) {
+            console.error("Error saving tasks to localStorage:", error);
+        }
     };
 
     // Function to add a new task
@@ -43,11 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create a new div for the task
         const taskWrapper = document.createElement('div');
         taskWrapper.classList.add('task-wrapper');
-        
+
         const taskItem = document.createElement('div');
         taskItem.classList.add('task-item');
         taskItem.innerHTML = `
-            <div class="task-content"> 
+            <div class="task-content">
                 <p class="task-text">${task}</p>
                 ${time ? `<p class="task-time">${time}</p>` : ''}
                 <div class="task-actions">
@@ -59,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Append the taskItem to the taskWrapper
         taskWrapper.appendChild(taskItem);
+
         // Append the taskWrapper to the tasksContainer
         tasksContainer.appendChild(taskWrapper);
 
@@ -81,17 +86,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (save) {
             saveTasks(); // Save tasks to localStorage
         }
-        
+
         // Clear input fields after adding task
         taskInput.value = '';
         taskTimeInput.value = ''; // Reset time input
+    };
+
+    // Function to validate task input
+    const validateTaskInput = (task) => {
+        if (!task.trim()) {
+            alert('Task cannot be empty');
+            return false;
+        }
+        return true;
     };
 
     // Event listener for create button
     createButton.addEventListener('click', () => {
         const task = taskInput.value.trim();
         const time = taskTimeInput.value;
-        if (task) {
+        if (validateTaskInput(task)) {
             addTask(task, time);
             taskInput.value = '';
             taskTimeInput.value = ''; // Reset time input
@@ -114,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') {
             const task = taskInput.value.trim();
             const time = taskTimeInput.value;
-            if (task) {
+            if (validateTaskInput(task)) {
                 addTask(task, time);
                 taskInput.value = '';
                 taskTimeInput.value = ''; // Reset time input
@@ -124,10 +138,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load tasks from localStorage
     const loadTasks = () => {
-        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        tasks.forEach(task => {
-            addTask(task.task, task.time, false);
-        });
+        try {
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            tasks.forEach(task => {
+                addTask(task.task, task.time, false);
+            });
+        } catch (error) {
+            console.error("Error loading tasks from localStorage:", error);
+        }
     };
 
     loadTasks(); // Load tasks when the page loads
