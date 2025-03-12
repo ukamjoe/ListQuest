@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         try {
             localStorage.setItem('tasks', JSON.stringify(tasks));
+            console.log("Tasks saved to localStorage"); // Logging for debugging
         } catch (error) {
             console.error("Error saving tasks to localStorage:", error);
         }
@@ -88,8 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Clear input fields after adding task
-        taskInput.value = '';
-        taskTimeInput.value = ''; // Reset time input
+        console.log("Clearing input fields"); // Logging for debugging
+        taskInput.value = ''; // Clear input field
+        taskTimeInput.value = ''; // Clear time input field
     };
 
     // Function to validate task input
@@ -107,8 +109,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const time = taskTimeInput.value;
         if (validateTaskInput(task)) {
             addTask(task, time);
-            taskInput.value = '';
-            taskTimeInput.value = ''; // Reset time input
+            taskInput.value = '';  // Clear input field after saving
+            taskTimeInput.value = '';  // Clear time input field after saving
+            console.log("Task added and input fields cleared"); // Logging for debugging
+        }
+    });
+
+    // Add task on Enter key press
+    taskInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const task = taskInput.value.trim();
+            const time = taskTimeInput.value;
+            if (validateTaskInput(task)) {
+                addTask(task, time);
+                taskInput.value = '';  // Clear input field after saving
+                taskTimeInput.value = '';  // Clear time input field after saving
+                console.log("Task added and input fields cleared"); // Logging for debugging
+            }
         }
     });
 
@@ -123,19 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         taskTimeInput.style.display = 'none';
     });
 
-    // Add task on Enter key press
-    taskInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const task = taskInput.value.trim();
-            const time = taskTimeInput.value;
-            if (validateTaskInput(task)) {
-                addTask(task, time);
-                taskInput.value = '';
-                taskTimeInput.value = ''; // Reset time input
-            }
-        }
-    });
-
     // Load tasks from localStorage
     const loadTasks = () => {
         try {
@@ -143,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks.forEach(task => {
                 addTask(task.task, task.time, false);
             });
+            console.log("Tasks loaded from localStorage"); // Logging for debugging
         } catch (error) {
             console.error("Error loading tasks from localStorage:", error);
         }
