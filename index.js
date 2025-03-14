@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error loading tasks from localStorage:", error);
         }
-git     };
+    };
 
     loadTasks(); // Load tasks when the page loads
 });
