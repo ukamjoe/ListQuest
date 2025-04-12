@@ -1,14 +1,15 @@
-bin/
-obj/
-build/
-node_modules/
-.vscode/
-.idea/
+# This is a comment explaining why we are ignoring this directory
+/build
+/bin
+/obj
+/node_modules
+/.vscode
+/.idea
 .DS_Store
 *.log
 *.exe
 *.dll
 *.pyc
-.env
-tmp/
-temp/
+*.env
+src/*/tmp/    # This pattern already specifies a certain level within 'src'
+/temp
