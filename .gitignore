@@ -1,0 +1,14 @@
+bin/
+obj/
+build/
+node_modules/
+.vscode/
+.idea/
+.DS_Store
+*.log
+*.exe
+*.dll
+*.pyc
+.env
+tmp/
+temp/
